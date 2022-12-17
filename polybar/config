@@ -1,5 +1,5 @@
 [bar/fullbar]
-monitor = ${env:MONITOR:eDP1}
+monitor = ${env:MONITOR:eDP-1}
 dpi = 192
 include-file = ~/.config/polybar/fullbar
 background = #D92E3440

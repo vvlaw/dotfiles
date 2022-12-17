@@ -177,7 +177,7 @@ click-left = ${config.notify-click-left}
 
 [module/network-wlan]
 type = internal/network
-interface = wlan0
+interface = ${config.interface}
 
 interval = 1
 
@@ -284,3 +284,279 @@ label-separator = " "
 label-separator-padding = 0
 ;label-separator-foreground = ${color.YELLOW}
 
+font-3 = FontAwesome5Free:style=Solid:pixelsize=18:antialias=false;3
+font-4 = FontAwesome5Brands:style=Solid:pixelsize=18:antialias=false;3
+
+[module/touchredraw]
+;; Restart i3 in order to redraw polybar to fit screen orientation
+type=custom/text
+content = "    "
+content-foreground=#fff
+click-left = i3-msg 'restart'
+
+[module/touchvolmute]
+;; Mute
+type=custom/text
+content="  "
+content-foreground=#fff
+click-left=pactl set-sink-mute @DEFAULT_SINK@ toggle
+
+[module/touchvoldown]
+;; Volume down
+type=custom/text
+content="  "
+content-foreground=#fff
+click-left=pactl set-sink-volume @DEFAULT_SINK@ -5% 
+
+[module/touchvolup]
+;; Volume up
+type=custom/text
+content="    "
+content-foreground=#fff
+click-left=pactl set-sink-volume @DEFAULT_SINK@ +5% 
+
+[module/i3touchmenu]
+type = custom/menu
+
+expand-right = true
+
+format-spacing = 1
+
+;; Open the menu
+label-open = "    "
+label-open-foreground = #FFF
+
+;; Close the menu
+label-close = 
+label-close-foreground = ${colors.secondary}
+label-separator = "    "
+label-separator-foreground = ${colors.foreground-alt}
+
+;; Launcher
+menu-0-0 = 
+menu-0-0-exec = menu-open-1
+
+;; Move
+menu-0-1 = 
+menu-0-1-exec = menu-open-2
+
+;; Layout
+menu-0-2 = 
+menu-0-2-exec = menu-open-3
+
+;; Split
+menu-0-3 = 
+menu-0-3-exec = menu-open-4
+
+;; Resize
+menu-0-4 = 
+menu-0-4-exec = menu-open-5
+
+;; Move to workspace
+menu-0-5 = 
+menu-0-5-exec = menu-open-6
+
+;; Kill
+menu-0-6 = 
+menu-0-6-exec = menu-open-7
+
+;; Power
+menu-0-7 ="    " 
+menu-0-7-exec = menu-open-8
+
+;; Launcher: Back to main menu
+menu-1-0 = 
+menu-1-0-exec = menu-open-0
+
+;; Launcher: chrome
+menu-1-1=
+menu-1-1-exec= google-chrome-stable & 
+
+;; Launcher: firefox
+menu-1-2=🌏
+menu-1-2-exec= firefox & 
+
+;; Launcher: alacritty
+menu-1-3=
+menu-1-3-exec= alacritty &
+
+;; Launcher: joplin
+menu-1-4=
+menu-1-4-exec= joplin-desktop &
+
+;; Launcher: pcmanfm
+menu-1-5=
+menu-1-5-exec= pcmanfm &
+
+;; Move: Back to main menu
+menu-2-0 = 
+menu-2-0-exec = menu-open-0
+
+;; Move: Left
+menu-2-1 = 
+menu-2-1-exec = i3-msg 'move left'
+
+;; Move: Right
+menu-2-2 = 
+menu-2-2-exec = i3-msg 'move right'
+
+;; Move: Up
+menu-2-3 = 
+menu-2-3-exec = i3-msg 'move up'
+
+;; Move: Down
+menu-2-4 = "    "
+menu-2-4-exec = i3-msg 'move down'
+
+;; Layout: Back to main menu
+menu-3-0 = 
+menu-3-0-exec = menu-open-0
+
+;; Layout: Split
+menu-3-1 = 
+menu-3-1-exec = i3-msg 'layout toggle split'
+
+;; Layout: Stacking
+menu-3-2 = 
+menu-3-2-exec = i3-msg 'layout stacking'
+
+;; Layout: Tabbed
+menu-3-3 =     
+menu-3-3-exec = i3-msg 'layout tabbed'
+
+;; Layout: Toggle floating
+menu-3-4 = "    "
+menu-3-4-exec = i3-msg 'floating toggle'
+
+;; Split: Back to main menu
+menu-4-0 = 
+menu-4-0-exec = menu-open-0
+
+;; Split: Vertical
+menu-4-1 = 
+menu-4-1-exec = i3-msg 'split v'
+
+;; Split: Horizontal
+menu-4-2 = "    "
+menu-4-2-exec = i3-msg 'split h'
+
+;; Resize: Back to main menu
+menu-5-0 = 
+menu-5-0-exec = menu-open-0
+
+;; Resize: Grow height
+menu-5-1 = 
+menu-5-1-exec = i3-msg 'resize grow height 5 px or 5 ppt'
+
+;; Resize: Shrink height
+menu-5-2 =
+menu-5-2-exec = i3-msg 'resize shrink height 5 px or 5 ppt'
+
+;; Resize: Grow width
+menu-5-3 = 
+menu-5-3-exec = i3-msg 'resize grow width 5 px or 5 ppt'
+
+;; Resize: Shrink width
+menu-5-4 = "    "
+menu-5-4-exec = i3-msg 'resize shrink width 5 px or 5 ppt
+
+;; Resize: rotate-left
+menu-5-5 = "    "
+menu-5-5-exec = sh /home/vvlaw/i3/rotate-left.sh
+
+;; Resize: rotate-landscape
+menu-5-6 = "    "
+menu-5-6-exec = sh /home/vvlaw/i3/landscape.sh
+
+;; Move to workspace: Back to main menu
+menu-6-0 = 
+menu-6-0-exec = menu-open-0
+
+;; Move to workspace: 1
+menu-6-1 = 1
+menu-6-1-exec = i3-msg 'move container to workspace 1'
+
+;; Move to workspace: 2
+menu-6-2 = 2
+menu-6-2-exec = i3-msg 'move container to workspace 2'
+
+;; Move to workspace: 3
+menu-6-3 = 3
+menu-6-3-exec = i3-msg 'move container to workspace 3'
+
+;; Move to workspace: 4
+menu-6-4 = 4
+menu-6-4-exec = i3-msg 'move container to workspace 4'
+
+;; Move to workspace: 5
+menu-6-5 = 5
+menu-6-5-exec = i3-msg 'move container to workspace 5'
+
+;; Move to workspace: 6
+menu-6-6 = 6
+menu-6-6-exec = i3-msg 'move container to workspace 6'
+
+;; Move to workspace: 7
+menu-6-7 = 7
+menu-6-7-exec = i3-msg 'move container to workspace 7'
+
+;; Move to workspace: 8
+menu-6-8 = 8
+menu-6-8-exec = i3-msg 'move container to workspace 8'
+
+;; Move to workspace: 9
+menu-6-9 = 9
+menu-6-9-exec = i3-msg 'move container to workspace 9'
+
+;; Move to workspace: 10
+menu-6-10 = "10    "
+menu-6-10-exec = i3-msg 'move container to workspace 10'
+
+;; Kill: Back to main menu
+menu-7-0 = 
+menu-7-0-exec = menu-open-0
+
+;; Kill: Kill
+menu-7-1 = "You sure?        "
+menu-7-1-exec = i3-msg 'kill'
+
+;; Power: Back to main menu
+menu-8-0 = 
+menu-8-0-exec = menu-open-0
+
+;; Power: Screen off
+menu-8-1 = 
+menu-8-1-exec = xset dpms force off 
+
+;; Power: Lock
+menu-8-2 = 
+menu-8-2-exec = i3lock
+
+;; Power: Reboot
+menu-8-3 = 
+menu-8-3-exec = shutdown -r now
+
+;; Power: Shutdown
+menu-8-4 = "    "
+menu-8-4-exec = shutdown -h now
+  
+[module/touchkeyboard]
+;; Open onscreen keyboard (onboard)
+type=custom/text
+content="   "
+content-foreground=#fff
+click-left= dbus-send --type=method_call --print-reply --dest=org.onboard.Onboard /org/onboard/Onboard/Keyboard org.onboard.Onboard.Keyboard.ToggleVisible
+
+[module/touchbrightdown]
+;; Brightness down
+type=custom/text
+content="  "
+content-foreground=#fff
+click-left=light -U 5
+
+[module/touchbrightup]
+;; Brightness up
+type=custom/text
+content="    "
+content-foreground=#fff
+click-left=light -A 5

@@ -38,10 +38,10 @@ override-redirect = false
 # Top modules
 top-left = update keyboard i3 title
 top-center = mpd
-top-right = weather notify backlight pulseaudio  battery network-wlan network-lan date
+top-right =  i3touchmenu notify backlight pulseaudio  battery network-wlan network-lan date
 
 # Bottom modules
-bottom-left =
+bottom-left = touchredraw touchkeyboard touchvolmute touchvoldown touchvolup touchbrightdown touchbrightup
 bottom-center = weather open-weather
 bottom-right = network-detail memory cpu
 
