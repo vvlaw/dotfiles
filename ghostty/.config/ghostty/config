@@ -1,0 +1,14 @@
+font-family = Inconsolata Nerd Font Mono
+font-size = 12
+background-opacity = 0.9
+gtk-titlebar = false
+resize-overlay = never
+confirm-close-surface = false
+window-padding-x = 10
+window-padding-y = 10
+window-vsync = true
+window-decoration = none
+window-step-resize = true
+background-blur = false
+theme = Nord
+keybind = alt+c=write_screen_file:open
