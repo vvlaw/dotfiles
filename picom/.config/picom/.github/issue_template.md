@@ -1,1 +1,0 @@
-../../../.dotfiles/.config/picom/.github/issue_template.md

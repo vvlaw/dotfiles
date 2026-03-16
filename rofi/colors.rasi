@@ -1,0 +1,7 @@
+* {
+    background:                #1e1e2e;
+    foreground:                #cdd6f4;
+    primary:                   #89b4fa;
+    surface-container-lowest:  #181825;
+    on-surface-variant:        #a6adc8;
+}

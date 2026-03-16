@@ -1,0 +1,13 @@
+configuration {
+    modi: "drun,run,window";
+    show-icons: true;
+    icon-theme: "Papirus-Dark";
+    font: "JetBrainsMono Nerd Font 13";
+    display-drun: " Apps";
+    display-run: " Run";
+    display-window: " Window";
+    drun-display-format: "{icon} {name}";
+}
+
+/* 在配置块之后添加主题引用 */
+@theme "~/.config/rofi/style.rasi"

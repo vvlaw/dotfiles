@@ -1,1 +1,0 @@
-../../../.dotfiles/.config/picom/.github/pull_request_template.md
