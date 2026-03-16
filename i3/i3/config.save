@@ -1,9 +1,4 @@
 # autostart
-exec --no-startup-id fcitx5 -d
-exec_always --no-startup-id xrdb -merge ~/.Xresources
-exec --no-startup-id env XDG_CURRENT_DESKTOP=GNOME /usr/lib/xdg-desktop-portal &
-exec --no-startup-id env XDG_CURRENT_DESKTOP=GNOME /usr/lib/xdg-desktop-portal-gtk &
-
 # compositor
 exec_always --no-startup-id picom -b
 # polybar
@@ -11,61 +6,40 @@ exec_always --no-startup-id ~/.config/polybar/launch.sh
 # keyboard
 exec --no-startup-id setxkbmap -layout us -variant intl
 exec --no-startup-id setxkbmap -option caps:backspace
-exec --no-startup-id xdotool key --clearmodifiers Num_Lock
-
-# keyboard
-
-set $mod Mod1
-exec_always xset r rate 300 50
-# i3-master-stack
-exec_always --no-startup-id bash /home/srch/.config/i3/i3-master-stack/i3_master
-font pango:Inconsolata Nerd Font Mono 10
-# hide mouse
-exec unclutter -idle 2 -root
 # background
-# 每 10 分钟 (600秒) 随机更换一次壁纸
-exec_always --no-startup-id while true; do feh --bg-fill --randomize ~/Pictures/wallpapers/*; sleep 600; done
+exec_always --no-startup-id feh --bg-fill "/home/srch/media/pictures/wallpapers/nord/output.png"
+# keyboard
+exec xset r rate 300 50
+set $mod Mod4
+# xborder
+exec_always --no-startup-id ~/.config/xborders/launch.sh
+# font
+font pango:Inconsolata Nerd Font Mono 10
 
 # i3
 exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id nm-applet
-# system
+
+# volume
+set $refresh_i3status killall -SIGUSR1 i3status
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
-bindsym $mod+Shift+Delete exec dm-tool lock
-bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set +5%
-bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 5%-
-bindsym $mod+Shift+t exec "xinput set-prop 'Microsoft Surface 045E:09AF Touchpad' 'Device Enabled' $(($(xinput list-props 'Microsoft Surface 045E:09AF Touchpad' | grep 'Device Enabled' | awk '{print $4}') ^ 1))"
+
+bindsym $mod+Shift+L exec dm-tool lock
 
 # applications
-#bindsym $mod+d exec --no-startup-id launcher_t1
-# 使用 adi1090x 的 Type-1 启动器
-bindsym $mod+d exec --no-startup-id ~/.config/rofi/launchers/type-1/launcher.sh
+bindsym $mod+d exec --no-startup-id launcher_t1
 bindsym $mod+Escape exec --no-startup-id powermenu_t1
-# 系统监控（建议加上）
-bindsym Control+Shift+Escape exec --no-startup-id ghostty -e btop
-bindsym $mod+b exec --no-startup-id ghostty -e btop
-
-# 浏览器（强烈建议加上，Chrome 和 Firefox 经常导致转圈）
-bindsym $mod+Shift+G exec --no-startup-id google-chrome-stable
-bindsym $mod+Shift+F exec --no-startup-id firefox
-
-# 终端与编辑器
-bindsym $mod+Return exec --no-startup-id ghostty
-bindsym $mod+e exec --no-startup-id ghostty
-bindsym $mod+Shift+V exec --no-startup-id ghostty -e nvim
-
-# 工具类
-bindsym Print exec --no-startup-id flameshot gui
-bindsym $mod+Shift+E exec --no-startup-id thunar
-# 切换 Polybar 托盘显示
-bindsym $mod+t exec --no-startup-id ~/.config/polybar/toggle_tray.sh
+bindsym Control+Shift+Escape exec alacritty -e btop
+bindsym $mod+Return exec alacritty
+bindsym Print exec flameshot gui
+bindsym $mod+Shift+W exec firefox
+bindsym $mod+Shift+E exec thunar
 
 # windows
 # kill focused window
-bindsym $mod+q kill
 bindsym $mod+Shift+q kill
 # drag windows
 floating_modifier $mod
@@ -94,8 +68,10 @@ bindsym $mod+Shift+Right  move right
 bindsym $mod+o split h
 bindsym $mod+v split v
 bindsym $mod+f fullscreen toggle
+bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
-bindsym $mod+s layout toggle split
+bindsym $mod+e layout toggle split
+bindsym $mod+Shift+v  vstack
 # floating window 
 bindsym $mod+Shift+space floating toggle
 bindsym $mod+space focus mode_toggle
@@ -137,13 +113,7 @@ bindsym $mod+Shift+7 move container to workspace number $ws7
 bindsym $mod+Shift+8 move container to workspace number $ws8
 bindsym $mod+Shift+9 move container to workspace number $ws9
 bindsym $mod+Shift+0 move container to workspace number $ws10
-# scratchpad
-bindsym $mod+Shift+minus move scratchpad
-bindsym $mod+minus scratchpad show
-# i3-master-stack
-bindsym $mod+m nop go master
-bindsym $mod+Shift+M nop swap master
-bindsym $mod+Alt+m nop master toggle
+
 # reload the configuration file
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
@@ -171,24 +141,36 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 # appearance
-#===power manager===
-set $mode_system select: lock(L) exit(E) reboot(R) poweroff(O) cancel(Esc)
-bindsym $mod+Control+c mode "$mode_system"
-mode "$mode_system" {
-    bindsym l exec --no-startup-id i3lock -c '#000000', mode "default"
-    bindsym e exec --no-startup-id i3-msg exit, mode "default"
-    bindsym r exec --no-startup-id systemctl reboot, mode "default"
-    bindsym o exec --no-startup-id systemctl poweroff, mode "default"
-    bindsym Escape mode "default"
-}
 # gaps
 gaps inner 5px
-gaps top 0
 # window decoration
-for_window [class=".*"] border pixel 2
+for_window [class=".*"] border pixel 0
 client.focused          #88c0d0 #88c0d0 #2e3440 #88c0d0 #88c0d0
 client.focused_inactive #4c566a #3b4252 #d8dee9 #3b4252 #3b4252
 client.unfocused        #4c566a #3b4252 #d8dee9 #3b4252 #3b4252
 client.urgent           #bf616a #bf616a #eceff4 #bf616a #bf616a
 client.background       #2e3440
+
+# bar {
+#
+#     position top
+#     mode dock
+#     tray_output primary
+#     tray_padding 5
+#     font pango:Inconsolata Nerd Font Mono Bold 10
+#     strip_workspace_numbers yes
+#     # status_command i3blocks
+#     colors {
+#       background #2e3440
+#       statusline #d8dee9
+#       separator #8FBCBB
+#
+#       focused_workspace  #88c0d0 #88c0d0 #2e3440
+#       active_workspace   #88c0d0 #88c0d0 #2e3440
+#       inactive_workspace #2e3440 #2e3440 #eceff4
+#       urgent_workspace   #b48ead #b48ead #2e3440
+#       binding_mode       #81a1c1 #81a1c1 #2e3440
+#     }
+#
+# }
 

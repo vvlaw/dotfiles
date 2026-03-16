@@ -2,3 +2,5 @@
 # VERSION: 3.0
 SETUVAR --export STARSHIP_CONFIG:/home/vvlaw/\x2econfig/fish/starship/starship\x2dsimple\x2etoml
 SETUVAR __fish_initialized:4300
+SETUVAR _fisher_franciscolourenco_2F_done_files:\x7e/\x2elocal/share/fisher/conf\x2ed/done\x2efish
+SETUVAR _fisher_plugins:franciscolourenco/done
